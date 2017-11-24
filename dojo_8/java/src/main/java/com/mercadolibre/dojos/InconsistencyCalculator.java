@@ -24,27 +24,28 @@ public final class InconsistencyCalculator {
      */
     @IInconsistency
     public static int getInconsistencyValue(CheckoutContext checkoutContext) {
-        CheckoutOptionsDto checkoutOptions = checkoutContext.getCheckoutOptionsDto();
-        NoneInconsitencia none = new NoneInconsitencia( new CheckoutOptions(checkoutOptions));
-        Inconsistency inconsistency = none;
-        
+        CheckoutOptionsDto checkoutOptionsDto = checkoutContext.getCheckoutOptionsDto();
+
 
         Inconsistency inconsistencies[] = {
-                new OnlyCanBeSent( new CheckoutOptions(checkoutOptions)),
-                new CantSentXunits(new CheckoutOptions(checkoutOptions)),
-                new AgreeAgree( new CheckoutOptions(checkoutOptions)),
-                new OnlyToAgree( new CheckoutOptions(checkoutOptions)),
-                new OnlyPuis( new CheckoutOptions(checkoutOptions))
+                new OnlyCanBeSent( new CheckoutOptions(checkoutOptionsDto)),
+                new CantSentXunits(new CheckoutOptions(checkoutOptionsDto)),
+                new AgreeAgree( new CheckoutOptions(checkoutOptionsDto)),
+                new OnlyToAgree( new CheckoutOptions(checkoutOptionsDto)),
+                new OnlyPuis( new CheckoutOptions(checkoutOptionsDto))
         };
 
-        for( Inconsistency i : inconsistencies) {
-            if ( !i.happens().equals( none ) ) {
-                inconsistency = i;
+        NoneInconsitencia none = new NoneInconsitencia( new CheckoutOptions(checkoutOptionsDto));
+        Inconsistency result = none;
+
+        for ( Inconsistency inconsistency : inconsistencies) {
+            if ( inconsistency.notNone() ) {
+                result = inconsistency;
                 break;
             }
-        };
+        }
 
-        return inconsistency.getNumber();
+        return result.getNumber();
 
     }
 

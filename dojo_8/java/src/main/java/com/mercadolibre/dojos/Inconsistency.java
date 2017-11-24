@@ -25,4 +25,8 @@ public abstract class Inconsistency {
     protected final CheckoutOptions getCheckoutOptions() {
         return this.checkoutOptions;
     }
+
+    public boolean notNone() {
+        return !this.happens().equals(new NoneInconsitencia(this.checkoutOptions));
+    }
 }
