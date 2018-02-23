@@ -1,19 +1,16 @@
 package com.mercadolibre.dojos;
 
 
-import com.mercadolibre.dojos.dto.*;
-import com.mercadolibre.dojos.util.PaymentMethodType;
-import com.mercadolibre.dojos.util.ShippingMethodType;
+import com.mercadolibre.dojos.dto.CheckoutOptionsDto;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Helper class that calculates the next step for the fallback shipping selection.
  * Created by jpperetti on 6/6/16.
  */
-public final class InconsistencyCalculator {
+final class InconsistencyCalculator {
 
     /**
      * Calculates the inconsistency (in case that there is one) related to the shipping
@@ -23,30 +20,30 @@ public final class InconsistencyCalculator {
      * @return an IInconsistency value that indicates the current case.
      */
     @IInconsistency
-    public static int getInconsistencyValue(CheckoutContext checkoutContext) {
-        CheckoutOptionsDto checkoutOptionsDto = checkoutContext.getCheckoutOptionsDto();
+    static int getInconsistencyValue(CheckoutContext checkoutContext) {
+        final List<Inconsistency> inconsistencies = getOrderedInconsistencies(checkoutContext);
+        return findTheOneInconsistencyThatIsHappening(inconsistencies).getNumber();
+    }
 
+    static List<Inconsistency> getOrderedInconsistencies(CheckoutContext checkoutContext) {
+        final CheckoutOptionsDto checkoutOptions = checkoutContext.getCheckoutOptionsDto();
+        final CheckoutOptions options = new CheckoutOptions(checkoutOptions);
 
-        Inconsistency inconsistencies[] = {
-                new OnlyCanBeSent( new CheckoutOptions(checkoutOptionsDto)),
-                new CantSentXunits(new CheckoutOptions(checkoutOptionsDto)),
-                new AgreeAgree( new CheckoutOptions(checkoutOptionsDto)),
-                new OnlyToAgree( new CheckoutOptions(checkoutOptionsDto)),
-                new OnlyPuis( new CheckoutOptions(checkoutOptionsDto))
-        };
+        return Arrays.asList(
+                new NoneInconsitencia(options),
+                new OnlyCanBeSent(options),
+                new CantSentXunits(options),
+                new AgreeAgree(options),
+                new OnlyToAgree(options),
+                new OnlyPuis(options)
+        );
+    }
 
-        NoneInconsitencia none = new NoneInconsitencia( new CheckoutOptions(checkoutOptionsDto));
-        Inconsistency result = none;
-
-        for ( Inconsistency inconsistency : inconsistencies) {
-            if ( inconsistency.notNone() ) {
-                result = inconsistency;
-                break;
-            }
-        }
-
-        return result.getNumber();
-
+    static Inconsistency findTheOneInconsistencyThatIsHappening(List<Inconsistency> inconsistencies) {
+        return inconsistencies.stream()
+                .map(Inconsistency::happens)
+                .reduce(Inconsistency::challenge)
+                .get();
     }
 
 

@@ -1,8 +1,5 @@
 package com.mercadolibre.dojos;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 public abstract class Inconsistency {
 
     private final CheckoutOptions checkoutOptions;
@@ -12,7 +9,7 @@ public abstract class Inconsistency {
     @IInconsistency
     public abstract int getNumber();
 
-    public Inconsistency(CheckoutOptions checkoutOptions) {
+    Inconsistency(CheckoutOptions checkoutOptions) {
         this.checkoutOptions = checkoutOptions;
     }
 
@@ -26,7 +23,5 @@ public abstract class Inconsistency {
         return this.checkoutOptions;
     }
 
-    public boolean notNone() {
-        return !this.happens().equals(new NoneInconsitencia(this.checkoutOptions));
-    }
+    public abstract Inconsistency challenge(Inconsistency otherInconsistency);
 }
