@@ -4,10 +4,7 @@ import java.util.Map;
 public class iOS extends Cliente {
 
     @Override
-    public Map transform(Map congrats) {
-
-        replaceOfflinePaymentType("mlu_offline_payment", congrats);
-
-        return congrats;
+    public void transform(Congrat congrats) {
+        congrats.replaceOfflinePaymentType("mlu_offline_payment");
     }
 }

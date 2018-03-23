@@ -3,11 +3,9 @@ import java.util.Map;
 public class Android10 extends Cliente {
 
     @Override
-    public Map transform(Map congrats) {
-        removeSection("exit", congrats);
+    public void transform(Congrat congrats) {
+        congrats.removeSection("exit");
 
-        replaceOfflinePaymentType("offline_payment", congrats);
-
-        return congrats;
+        congrats.replaceOfflinePaymentType("offline_payment");
     }
 }
