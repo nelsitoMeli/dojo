@@ -26,7 +26,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("ios");
+        Cliente cliente = new iOS();
 
         Congrat congrat = new Congrat(congrats);
 
@@ -63,7 +63,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("android");
+        Cliente cliente = new Android();
 
         Congrat congrat = new Congrat(congrats);
 
@@ -80,7 +80,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("ios");
+        Cliente cliente = new iOS();
 
         Congrat congrat = new Congrat(congrats);
 
@@ -97,7 +97,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("android", "103");
+        Cliente cliente = new Android103();
 
         Congrat congrat = new Congrat(congrats);
 
@@ -114,7 +114,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("ios", "9");
+        Cliente cliente = new iOS9();
 
         Congrat congrat = new Congrat(congrats);
 
@@ -128,7 +128,7 @@ public class DojoTest {
                 Map.class
         );
 
-        Cliente cliente = new ClienteFactory().create("android", "10");
+        Cliente cliente = new Android10();
 
         Congrat congrat = new Congrat(congrats);
 
