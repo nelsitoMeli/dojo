@@ -21,7 +21,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_ios_8_10_0() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_ios_8_10_0.json"),
                 Map.class
         );
@@ -44,7 +44,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_android_7_12_0() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_android_7_12_0.json"),
                 Map.class
         );
@@ -58,7 +58,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_ios_8_10_0_sent_to_android_7_12_0() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_ios_8_10_0.json"),
                 Map.class
         );
@@ -75,7 +75,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_android_7_12_0_sent_to_ios_8_10_0() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_android_7_12_0.json"),
                 Map.class
         );
@@ -92,7 +92,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_android_103() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_android_7_12_0.json"),
                 Map.class
         );
@@ -101,15 +101,12 @@ public class DojoTest {
 
         Congrat congrat = new Congrat(congrats);
 
-        assertEquals(
-                ((List<Map>)congrat.asMap(cliente).get("sections")).get(0).get("type"),
-                "OFFLINE_PAYMENT"
-        );
+        assertEquals(congrats , congrat.asMap(cliente));
     }
 
     @Test
     public void test_congrats_order_paid_off_for_ios_9() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_android_7_12_0.json"),
                 Map.class
         );
@@ -123,7 +120,7 @@ public class DojoTest {
 
     @Test
     public void test_congrats_order_paid_off_for_android_10() throws IOException {
-        Map congrats = JSONMapper.toObject(
+        Map congrats = new JSONMapper().toObject(
                 ResourceLoader.getFileAsString("congrats/congrats/congrats_order_paid_off_for_android_7_12_0.json"),
                 Map.class
         );
