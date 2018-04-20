@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class JSONMapper extends ObjectMapper {
-    private ObjectMapper mapper() {
+    private static ObjectMapper mapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -15,7 +15,7 @@ public class JSONMapper extends ObjectMapper {
         return mapper;
     }
 
-    public <T> T toObject(Object data, Class<T> aClass) throws IOException {
+    public static <T> T toObject(Object data, Class<T> aClass) throws IOException {
         return mapper().readValue((String) data, aClass);
     }
 }
