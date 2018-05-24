@@ -1,5 +1,6 @@
 package steps;
 
+import payments.Boleto;
 import payments.GatewayApi;
 import payments.Tarjeta;
 
@@ -11,5 +12,9 @@ public class SeleccionDeMedioDePago implements CheckoutStep {
 
     public AltaDeTarjeta altaDeTarjeta() {
         return new AltaDeTarjeta();
+    }
+
+    public Review boleto(Boleto boleto) {
+        return new Review(boleto);
     }
 }

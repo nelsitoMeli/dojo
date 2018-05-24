@@ -1,8 +1,11 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import payments.Boleto;
 import payments.MasterCard0002;
 import payments.Visa0001;
+import shippings.Envio;
+import shippings.Express;
 import steps.*;
 
 /**
@@ -30,7 +33,7 @@ public class DojoTest {
         // Zeplin: https://zpl.io/25zKgWV
         SeleccionDeEnvio seleccionDeEnvio = new SeleccionDeEnvio();
 
-        CheckoutStep nextStep = seleccionDeEnvio.envioADomicilio();
+        CheckoutStep nextStep = seleccionDeEnvio.envioADomicilio(new Envio(90));
 
         // Zeplin: https://zpl.io/br1Km7L
         Assert.assertEquals(SeleccionDeMedioDePago.class, nextStep.getClass());
@@ -43,7 +46,7 @@ public class DojoTest {
 
         SeleccionDeEnvio seleccionDeEnvio = review.modificarEnvio();
 
-        CheckoutStep nextStep = seleccionDeEnvio.envioADomicilio();
+        CheckoutStep nextStep = seleccionDeEnvio.envioADomicilio(new Envio(90));
 
         Assert.assertEquals(Review.class, nextStep.getClass());
     }
@@ -142,4 +145,25 @@ public class DojoTest {
     //Selecciona un medio de envio con costo mayor al limite
     //Despliega inconsistencia de medio de pago
     //Vuelve a seleccion de medio de envio
+
+    @Test
+    public void inconsistenciaPorMontoDeEnvio() {
+        SeleccionDeEnvio seleccionDeEnvio = new SeleccionDeEnvio();
+        SeleccionDeMedioDePago seleccionDeMedioDePago = (SeleccionDeMedioDePago) seleccionDeEnvio.envioADomicilio(new Envio(90));
+        Review review = seleccionDeMedioDePago.boleto(new Boleto(100));
+        SeleccionDeEnvio nuevaSeleccionDeEnvio = review.modificarEnvio();
+        ModalInconsistenciaDeMedioDePago modalInconsistenciaDeMedioDePago = (ModalInconsistenciaDeMedioDePago) nuevaSeleccionDeEnvio.expressADomicilio(new Express(190));
+
+        Assert.assertEquals(SeleccionDeEnvio.class, modalInconsistenciaDeMedioDePago.cancelar().getClass());
+    }
+
+    @Test
+    public void sinInconsistenciaPorMontoDeEnvio() {
+        SeleccionDeEnvio seleccionDeEnvio = new SeleccionDeEnvio();
+        SeleccionDeMedioDePago seleccionDeMedioDePago = (SeleccionDeMedioDePago) seleccionDeEnvio.envioADomicilio(new Envio(90));
+        Review review = seleccionDeMedioDePago.boleto(new Boleto(200));
+        SeleccionDeEnvio nuevaSeleccionDeEnvio = review.modificarEnvio();
+
+        Assert.assertEquals(Review.class, nuevaSeleccionDeEnvio.expressADomicilio(new Express(190)).getClass());
+    }
 }
