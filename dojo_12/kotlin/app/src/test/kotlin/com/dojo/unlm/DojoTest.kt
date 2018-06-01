@@ -1,26 +1,22 @@
 package com.dojo.unlm
 
-import org.junit.Assert
-import org.junit.Test
-
-import org.junit.Assert.*
-import org.junit.Before
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.on
+import kotlin.test.assertEquals
 
 /**
  * Tests for the dojo.
  */
-class DojoTest {
+class DojoTest : Spek({
 
-    @Before
-    fun setup() {
-
+    given("a B object") {
+        on("comparing to other B object") {
+            it("is equal"){
+                assertEquals(B(), B())
+            }
+        }
     }
 
-    @Test
-    fun test_ejemplo() {
-
-        Assert.assertTrue(true)
-        Assert.assertEquals(B(), B())
-    }
-
-}
+})
