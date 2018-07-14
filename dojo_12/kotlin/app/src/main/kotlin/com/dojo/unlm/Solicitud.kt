@@ -14,4 +14,9 @@ class Solicitud(private var condicion : Condicion) {
         condicion = Y(condicion, nuevaCondicion)
         return this
     }
+
+    fun o(nuevaCondicion: Condicion): Solicitud {
+        condicion = O(condicion, nuevaCondicion)
+        return this
+    }
 }

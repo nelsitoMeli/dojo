@@ -15,7 +15,8 @@ class DojoTest : Spek({
         val cau = CAU(listOf(
                 Aula("A", 5),
                 Aula("B", 15),
-                Aula("C", 15, 50)))
+                Aula("C", 15, 50),
+                Aula("D", 15, computadoras = 15)))
 
 
         on ("se solicita una para 10 personas") {
@@ -25,7 +26,7 @@ class DojoTest : Spek({
             it ("entrega una etiqueta con el nombre del aula") {
                 val etiqueta = cau.buscar(solicitud)
 
-                assertEquals("Aula: Lab B", etiqueta.toString())
+                assertEquals(Etiqueta("Aula: Lab B"), etiqueta)
             }
         }
 
@@ -34,7 +35,7 @@ class DojoTest : Spek({
 
             var etiqueta = cau.buscar(solicitud)
 
-            assertEquals("No hay aula disponible", etiqueta.toString())
+            assertEquals(Etiqueta("No hay aula disponible"), etiqueta)
         }
 
 
@@ -43,7 +44,37 @@ class DojoTest : Spek({
 
             var etiqueta = cau.buscar(solicitud)
 
-            assertEquals("Aula: Lab C", etiqueta.toString())
+            assertEquals(Etiqueta("Aula: Lab C"), etiqueta)
+        }
+
+
+        on ("se solicita una con computadoras") {
+            val solicitud = Solicitud(AlumnosQueAsisten(10)).y(Computadoras(5))
+
+            var etiqueta = cau.buscar(solicitud)
+
+            assertEquals(Etiqueta("Aula: Lab D"), etiqueta)
+        }
+
+
+        on ("se solicita una con computadoras o 20m2") {
+            val solicitud = Solicitud(Computadoras(5)).o(EspacioNecesario(20))
+
+            var etiqueta = cau.buscar(solicitud)
+
+            assertEquals(Etiqueta("Aula: Lab C"), etiqueta)
+        }
+
+        on ("se solicita para alumnos no videntes") {
+            val solicitud = Solicitud(AlumnosQueAsisten(10))
+
+            it ("la etiqueta se imprime en braile") {
+                var etiqueta = cau.buscar(solicitud)
+
+                assertEquals(Etiqueta("Aula: Lab B"), etiqueta)
+
+                assertEquals(EtiquetaBraile("braile.png"), etiqueta.toBraile())
+            }
         }
     }
 
