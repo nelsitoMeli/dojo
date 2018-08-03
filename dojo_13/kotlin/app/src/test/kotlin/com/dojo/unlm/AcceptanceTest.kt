@@ -23,27 +23,6 @@ class AcceptanceTest : Spek({
         val jugador1 = Jugador()//.toma(TresDeEspadas(), AnchoDeEspada(), CuatroDeCopas())
         val jugador2 = Jugador()//.toma(AnchoDeBasto(), CuatroDeBasto(), SieteDeBasto())
 
-        on("El jugador 1 juega el ancho de espada y El jugador 2 juega el 4 de basto") {
-
-            var bajada = jugador1.baja(AnchoDeEspada())
-            bajada = jugador2.baja(bajada, CuatroDeBasto())
-
-            it("El jugador 1 puede jugar el tres de espada porque gano la bajada anterior ya que el ancho de espada mata todas las cartas"){
-                jugador1.baja(bajada, TresDeEspadas())
-                assertTrue(true)
-            }
-
-            it("El jugador 2 quiere jugar y no puede porque no ganó la bajada anterior") {
-                try {
-                    jugador2.baja(bajada, SieteDeBasto())
-                    fail("El segundo jugador no puede jugar porque perdió")
-                } catch (ex: NoEsTuTurnoException) {
-                    assertTrue(true)
-                }
-            }
-
-        }
-
         on("El jugador 1 juega el ancho de espada y El jugador 2 juega el 4 de basto," +
                 "el 1 juega el tres de espada, el 2 el el ancho de basto, y por ultimo" +
                 "el jugador 2 juega el 7 de basto y el 1 juega el 4 de copas") {

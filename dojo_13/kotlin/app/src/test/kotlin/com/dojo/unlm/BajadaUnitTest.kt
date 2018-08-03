@@ -15,16 +15,15 @@ class BajadaUnitTest : Spek({
         var jugador1 = Jugador()
         var jugador2 = Jugador()
         on("tiran 2 cartas") {
-            var bajada = jugador1.baja(AnchoDeEspada())
-            bajada = jugador2.baja(bajada, CuatroDeBasto())
+            var mano = jugador1.baja(AnchoDeEspada())
+            mano = jugador2.baja(mano, CuatroDeBasto())
 
             it("empieza una bajada nueva") {
-                var bajadaNueva = jugador1.baja(bajada, TresDeEspadas())
-                bajadaNueva
+                jugador1.baja(mano, TresDeEspadas())
             }
 
             it("el jugador 2 puede jugar luego del 1") {
-                bajada = jugador2.baja(bajada, AnchoDeBasto())
+                mano = jugador2.baja(mano, AnchoDeBasto())
                 assertTrue(true)
             }
         }
