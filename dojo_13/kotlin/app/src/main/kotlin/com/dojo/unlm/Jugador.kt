@@ -1,5 +1,6 @@
 package com.dojo.unlm
 
+import com.dojo.unlm.cartas.Carta
 import com.dojo.unlm.exception.NoEsTuTurnoException
 
 open class Jugador {
@@ -7,10 +8,14 @@ open class Jugador {
         return this
     }
 
+    fun baja(carta: Carta): Mano {
+        //return Bajada().agregar(this, carta)
+        return Mano(this, carta)
+    }
 
-    fun baja(bajada: Bajada, carta: Carta): Bajada {
-        bajada.agregar(this, carta)
-        return bajada
+    fun baja(mano: Mano, carta: Carta): Mano {
+        mano.agregar(this, carta)
+        return mano
     }
 
     open fun puedeJugar(jugador: Jugador) {

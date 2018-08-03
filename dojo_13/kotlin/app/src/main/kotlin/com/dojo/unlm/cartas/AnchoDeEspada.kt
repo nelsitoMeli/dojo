@@ -1,4 +1,6 @@
-package com.dojo.unlm
+package com.dojo.unlm.cartas
+
+import com.dojo.unlm.Jugador
 
 class AnchoDeEspada : Carta {
 
