@@ -11,21 +11,5 @@ import org.jetbrains.spek.api.dsl.on
 import kotlin.test.assertTrue
 
 class BajadaUnitTest : Spek({
-    given("dos jugadores") {
-        var jugador1 = Jugador()
-        var jugador2 = Jugador()
-        on("tiran 2 cartas") {
-            var mano = jugador1.baja(AnchoDeEspada())
-            mano = jugador2.baja(mano, CuatroDeBasto())
-
-            it("empieza una bajada nueva") {
-                jugador1.baja(mano, TresDeEspadas())
-            }
-
-            it("el jugador 2 puede jugar luego del 1") {
-                mano = jugador2.baja(mano, AnchoDeBasto())
-                assertTrue(true)
-            }
-        }
-    }
+    
 })

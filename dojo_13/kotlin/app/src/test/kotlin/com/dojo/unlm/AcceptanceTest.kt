@@ -1,16 +1,14 @@
 package com.dojo.unlm
 
 import com.dojo.unlm.cartas.*
-import com.dojo.unlm.exception.NoEsTuTurnoException
 import com.dojo.unlm.puntaje.NoCantoNadie
 import com.dojo.unlm.puntaje.Punto
+import com.dojo.unlm.puntaje.SinPuntos
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
-import kotlin.test.fail
 
 /**
  * Tests for the dojo.
@@ -39,7 +37,7 @@ class AcceptanceTest : Spek({
             }
 
             it("el jugador 1 no tiene puntos") {
-                assertEquals(Punto(jugador1), mano.puntos(jugador1))
+                assertEquals(Punto(jugador1, SinPuntos()), mano.puntos(jugador1))
             }
         }
     }

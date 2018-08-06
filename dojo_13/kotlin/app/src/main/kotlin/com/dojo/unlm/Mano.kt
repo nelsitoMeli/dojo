@@ -1,13 +1,17 @@
 package com.dojo.unlm
 
 import com.dojo.unlm.cartas.Carta
+import com.dojo.unlm.puntaje.NoCantoNadie
 import com.dojo.unlm.puntaje.Punto
 
 class Mano(jugador: Jugador, carta: Carta) {
-    var ganadorAnterior: Jugador = Nadie()
+    var ganadorBajadaAnterior: Jugador = Nadie()
+    var bajadas = ArrayList<Bajada>()
+    init {
+        bajadas.add(Bajada(jugador, carta))
+    }
 
-    var bajada = Bajada(jugador, carta)
-
+    var cartasEnMano: Int = 1
     fun agregar(jugador: Jugador, cartaNueva: Carta): Mano {
         /*
         si hay una carta jugada anteriormente,
@@ -16,21 +20,17 @@ class Mano(jugador: Jugador, carta: Carta) {
             comparar si el jugador es el ganador anterior
          */
 
-        /*if (ganadorAnterior == Nadie() || ganadorAnterior == jugador) {
-            ganadorAnterior = cartaAnterior.contra(cartaNueva, jugadorAnterior, jugador)
-            jugadorAnterior = jugador
-            cartaAnterior = cartaNueva
-        } else {
-            throw NoEsTuTurnoException()
-        }*/
-        ganadorAnterior.puedeJugar(jugador)
-        ganadorAnterior = bajada.agregar(jugador, cartaNueva)
-
+        ganadorBajadaAnterior.puedeJugar(jugador)
+        if (cartasEnMano % 2 == 0) {
+            bajadas.add(Bajada(jugador, cartaNueva))
+        }
+        cartasEnMano++
+        ganadorBajadaAnterior = bajadas[(cartasEnMano - 1) / 2].agregar(jugador, cartaNueva)
         return this
     }
 
     fun puntos(): Punto {
-        return Punto(ganadorAnterior)
+        return Punto(ganadorBajadaAnterior, NoCantoNadie())
     }
 
     fun puntos(jugador: Jugador): Punto {

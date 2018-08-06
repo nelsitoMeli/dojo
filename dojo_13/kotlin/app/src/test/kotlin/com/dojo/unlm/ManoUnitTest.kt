@@ -2,10 +2,13 @@ package com.dojo.unlm
 
 import com.dojo.unlm.cartas.*
 import com.dojo.unlm.exception.NoEsTuTurnoException
+import com.dojo.unlm.puntaje.NoCantoNadie
+import com.dojo.unlm.puntaje.Punto
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -18,31 +21,22 @@ class ManoUnitTest : Spek({
 
 
         on("El jugador 2 juega el 4 de basto"){
-
-            it("El jugador 1 puede jugar el tres de espada porque gano la bajada anterior ya que el ancho de espada mata todas las cartas"){
-                var mano = jugador1.baja(AnchoDeEspada())
-                mano = jugador2.baja(mano, CuatroDeBasto())
-                jugador1.baja(mano, TresDeEspadas())
-                assertTrue(true)
-            }
-
-            it("El jugador 2 quiere jugar y no puede porque no ganó la bajada anterior") {
-                try {
-                    var mano = jugador1.baja(AnchoDeEspada())
-                    mano = jugador2.baja(mano, CuatroDeBasto())
-                    jugador2.baja(mano, SieteDeBasto())
-                    fail("El segundo jugador no puede jugar porque perdió")
-                } catch (ex: NoEsTuTurnoException) {
-                    assertTrue(true)
-                }
-            }
+            var mano = Mano(jugador1, AnchoDeEspada())
+            mano.agregar(jugador2, CuatroDeBasto())
 
             it("El jugador 1 juega el Tres de Espadas y el Dos juega en Ancho de Basto") {
-                var mano = jugador1.baja(AnchoDeEspada())
-                mano = jugador2.baja(mano, CuatroDeBasto())
-                mano = jugador1.baja(mano, TresDeEspadas())
-                mano = jugador2.baja(mano, AnchoDeBasto())
+                mano.agregar(jugador1, TresDeEspadas())
+                mano.agregar(jugador2, CuatroDeBasto())
                 assertTrue(true)
+            }
+        }
+
+        on ("una bajada está completa y gana el jugador 2") {
+            var mano = Mano(jugador1, TresDeEspadas())
+            mano.agregar(jugador2, AnchoDeBasto())
+
+            it("puntos devuelve los del jugador2"){
+                assertEquals(Punto(jugador2, NoCantoNadie()), mano.puntos())
             }
         }
     }

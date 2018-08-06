@@ -1,9 +1,8 @@
 package com.dojo.unlm.puntaje
 
-class NoCantoNadie : PuntoState {
-
+class SinPuntos : PuntoState {
     override fun equals(other: Any?): Boolean {
-        if (other is NoCantoNadie) return true
+        if (other is SinPuntos) return true
         return false
     }
 }
